@@ -1,0 +1,28 @@
+##############################################################
+
+menu.cpu=Processor
+
+########################################
+## Sondori Pico
+########################################
+pico.name=Sondori Pico
+
+pico.upload.tool=arduino:avrdude
+pico.upload.protocol=arduino
+pico.upload.maximum_size=126976
+pico.upload.speed=57600
+
+pico.bootloader.low_fuses=0xD6
+pico.bootloader.high_fuses=0xDA
+pico.bootloader.extended_fuses=0xFD
+pico.bootloader.unlock_bits=0x3F
+pico.bootloader.lock_bits=0x0F
+
+pico.build.mcu=atmega1284p
+pico.build.f_cpu=16000000L
+pico.build.board=AVR_SANGUINO
+pico.build.core=arduino:arduino
+pico.build.variant=sanguino
+
+pico.bootloader.file=atmega/ATmegaBOOT_168_atmega1284p.hex
+pico.bootloader.tool=avrdude
