@@ -357,7 +357,7 @@ void PID_autotune(float temp, int extruder, int ncycles) {
       SERIAL_PROTOCOLPGM("#define  DEFAULT_"); SERIAL_PROTOCOL(estring); SERIAL_PROTOCOLPGM("Kd "); SERIAL_PROTOCOLLN(Kd);
       return;
     }
-    lcd_update();
+    //lcd_update();
   }
 }
 
@@ -384,8 +384,8 @@ int getHeaterPower(int heater) {
 void setExtruderAutoFanState(int pin, bool state) {
   unsigned char newFanSpeed = (state != 0) ? EXTRUDER_AUTO_FAN_SPEED : 0;
   // this idiom allows both digital and PWM fan outputs (see M42 handling).
-  digitalWrite(pin, newFanSpeed);
-  analogWrite(pin, newFanSpeed);
+  digitalWrite(pin, newFanSpeed); //newFanSpeed
+  analogWrite(pin, newFanSpeed); //newFanSpeed
 }
 
 void checkExtruderAutoFans() {

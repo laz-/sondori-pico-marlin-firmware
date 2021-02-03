@@ -275,7 +275,7 @@ void CardReader::getAbsFilename(char *t) {
 }
 
 void CardReader::openFile(char* name, bool read, bool replace_current/*=true*/) {
-  if (!cardOK) return;
+  if (!cardOK) { return;}
   if (file.isOpen()) { //replacing current file by new file, or subfile call
     if (!replace_current) {
       if (file_subcall_ctr > SD_PROCEDURE_DEPTH - 1) {
@@ -594,6 +594,7 @@ void CardReader::printingHasFinished() {
     if (SD_FINISHED_STEPPERRELEASE) {
       //finishAndDisableSteppers();
       enqueuecommands_P(PSTR(SD_FINISHED_RELEASECOMMAND));
+	  MYSERIAL.print("printinghasfinished!!!");
     }
     autotempShutdown();
   }

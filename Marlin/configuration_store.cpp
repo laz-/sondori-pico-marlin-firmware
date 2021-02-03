@@ -95,33 +95,36 @@
 #include "temperature.h"
 #include "ultralcd.h"
 #include "configuration_store.h"
+#include "Pico_Controller.h"
+
 
 #if ENABLED(MESH_BED_LEVELING)
   #include "mesh_bed_leveling.h"
 #endif
 
+
+
 void _EEPROM_writeData(int &pos, uint8_t* value, uint8_t size) {
-  uint8_t c;
-  while (size--) {
-    eeprom_write_byte((unsigned char*)pos, *value);
-    c = eeprom_read_byte((unsigned char*)pos);
-    if (c != *value) {
-      SERIAL_ECHO_START;
-      SERIAL_ECHOLNPGM(MSG_ERR_EEPROM_WRITE);
-    }
-    pos++;
-    value++;
-  };
+	uint8_t c;
+	while (size--) {
+		eeprom_write_byte((unsigned char*)pos, *value);
+		c = eeprom_read_byte((unsigned char*)pos);
+		if (c != *value) {
+			SERIAL_ECHO_START;
+			SERIAL_ECHOLNPGM(MSG_ERR_EEPROM_WRITE);
+		}
+		pos++;
+		value++;
+	};
 }
 void _EEPROM_readData(int &pos, uint8_t* value, uint8_t size) {
-  do {
-    *value = eeprom_read_byte((unsigned char*)pos);
-    pos++;
-    value++;
-  } while (--size);
+	do {
+		*value = eeprom_read_byte((unsigned char*)pos);
+		pos++;
+		value++;
+	} while (--size);
 }
-#define EEPROM_WRITE_VAR(pos, value) _EEPROM_writeData(pos, (uint8_t*)&value, sizeof(value))
-#define EEPROM_READ_VAR(pos, value) _EEPROM_readData(pos, (uint8_t*)&value, sizeof(value))
+
 
 /**
  * Store Configuration Settings - M500
@@ -131,11 +134,14 @@ void _EEPROM_readData(int &pos, uint8_t* value, uint8_t size) {
 
 #define EEPROM_OFFSET 100
 
+
+
+
 #if ENABLED(EEPROM_SETTINGS)
 
 void Config_StoreSettings()  {
   float dummy = 0.0f;
-  char ver[4] = "000";
+  char ver[4] = "0001";
   int i = EEPROM_OFFSET;
   EEPROM_WRITE_VAR(i, ver); // invalidate data first
   EEPROM_WRITE_VAR(i, axis_steps_per_unit);
@@ -286,6 +292,7 @@ void Config_StoreSettings()  {
   int j = EEPROM_OFFSET;
   EEPROM_WRITE_VAR(j, ver2); // validate data
 
+  
   // Report storage size
   SERIAL_ECHO_START;
   SERIAL_ECHOPAIR("Settings Stored (", (unsigned long)i);
@@ -454,7 +461,7 @@ void Config_RetrieveSettings() {
       EEPROM_READ_VAR(i, dummy);
       if (q < EXTRUDERS) filament_size[q] = dummy;
     }
-
+	
     calculate_volumetric_multipliers();
     // Call updatePID (similar to when we have processed M301)
     updatePID();
@@ -472,6 +479,7 @@ void Config_RetrieveSettings() {
 }
 
 #endif // EEPROM_SETTINGS
+
 
 /**
  * Reset Configuration Settings - M502
@@ -890,5 +898,7 @@ void Config_PrintSettings(bool forReplay) {
     SERIAL_EOL;
   #endif
 }
+
+
 
 #endif // !DISABLE_M503

@@ -10,6 +10,9 @@
   #define GEN7_VERSION 12 // v1.x
 #endif
 
+
+
+
 //x axis pins
 #define X_STEP_PIN 19
 #define X_DIR_PIN 18
